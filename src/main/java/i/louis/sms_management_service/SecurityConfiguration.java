@@ -35,17 +35,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(customUserDetailsService);
     }
 
-
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/**").hasRole("ADMIN")
                 .antMatchers("/authenticate").permitAll()
+                .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
